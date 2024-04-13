@@ -1,0 +1,15 @@
+Tech requirements
+
+Languages - Python, javascript, html/css
+
+Technologies - Google Gemini, Flask, pinecone, google cloud services, llama_index stuff
+
+Design unknowns/challenges - Google cloud services, front end development, I have a whole ass football game at 11am tomorrow
+
+Design to do:
+1. find technologies and requirements - in progress
+2. research and play with unknown tech (google cloud services)
+2. begin by making a poc
+3. begin building front end
+4. fully flesh out a MVP
+5. present
