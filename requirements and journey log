@@ -23,10 +23,10 @@ Design to do:
     This hardest step so far as been taken, the rest will be smooth and steady until i begin work on the UI
 
 3:30 4/13
-1. get docs text into pinecone service
-    trigger scraping of docs by user pressing button
-    embed with gemini
-    store with pinecone
-2. build chatbot service
-3. interaction handler
-4. frontend flask and javascript
+1. get docs text into pinecone service                  -done
+    trigger scraping of docs by user pressing button    -will do when ui work starts
+    embed with gemini                                   -done
+    store with pinecone                                 -done
+2. build chatbot service                                -done
+3. interaction handler                                  -done
+4. frontend flask and javascript                        -next
