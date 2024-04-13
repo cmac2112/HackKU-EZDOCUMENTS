@@ -5,15 +5,15 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from storage_service import StorageService #my class to store and embedd
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
+#most of this is from the google drive api quickstart guide
+#i have talored it to my needs
 
 
 def main():
-    """Shows basic usage of the Drive v3 API.
-    Prints the text content of the first 10 Google Docs the user has access to.
-    """
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -51,7 +51,8 @@ def main():
         if not items:
             print("No Google Docs found.")
             return
-
+        #list to send to storage service
+        storage_list = []
         print("Google Docs:")
         for item in items:
             doc_id = item["id"]
@@ -60,12 +61,16 @@ def main():
             request = service.files().export_media(fileId=doc_id, mimeType="text/plain")
             response = request.execute()
             print(f"Content of {doc_name} ({doc_id}):")
-            print(response.decode("utf-8"))
-            print("=" * 50)
+            print(response.decode("utf-8")) # here i can redirect this text to be embedded and stored into pinecone
+            storage_list.append(response.decode("utf-8"))
     except HttpError as error:
         # Handle errors from Drive API
         print(f"An error occurred: {error}")
 
+    # Store and embed the text from the Google Docs
+    storage_service = StorageService(storage_list)
+    storage_service.get_embed_and_store()
+    #storage and scrape done
 
 if __name__ == "__main__":
     print("Starting OAuth flow...")
