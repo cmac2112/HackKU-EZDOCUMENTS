@@ -13,3 +13,11 @@ Design to do:
 3. begin building front end
 4. fully flesh out a MVP
 5. present
+
+
+10:15 4/12 - need to get home i have a football game tomorrow
+    got google drive and docs linked through google cloud api services, hopefully i dont break it in developing more stuff. 
+    scrapetext.py now scrapes the first 10 docs in your google doc account and displays it to the console. One step away from 
+    turning those words into vectors to store into pinecone.
+
+    This hardest step so far as been taken, the rest will be smooth and steady until i begin work on the UI
