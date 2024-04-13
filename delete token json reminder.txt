@@ -1,0 +1,1 @@
+token.json causes some issues, fix that tomorrow then find a way to scrape text into a database
