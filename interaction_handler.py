@@ -36,3 +36,5 @@ class InteractionHandler:
         index = VectorStoreIndex.from_vector_store(vector_store=vector_store)
         print(str(index))
         return index
+    
+    

@@ -1,128 +1,38 @@
-<!DOCTYPE html> 
-<html> 
-<head> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-    body, html{
-        height: 100%;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #ccc;
-    }
-
-    .input-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        padding: 20px 0;
-    }
-
-    #input{
-        margin-right: 10px;
-    }
-
-    .center-box{
-        width: 200px;
-        height: 200px;
-        background-color: #ccc;
-        border: 1px solid #672f2f;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0,1);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    #output-box {
-        width: 70%;
-        height: 500px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: flex-start;
-        overflow-y: auto; /* Added for scrollability */
-    }
-
-    .message {
-        margin: 5px 0;
-        padding: 5px;
-        border-radius: 5px;
-        max-width: 80%; /* Added for proper alignment */
-    }
-
-    .user-message {
-        background-color: #e6f7ff; /* Added for distinction */
-        align-self: flex-start; /* Added for left alignment */
-    }
-
-    .bot-message {
-        background-color: #d9ead3; /* Added for distinction */
-        align-self: flex-end; /* Added for right alignment */
-    }
-</style>
-    <title>Chatbot UI</title> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-</head> 
-<body> 
-    <div class="center-box">
-        <p> This is a centered box</p>
-    </div>
-
-    <div id="output-box">
-        <div id="user-input" class="message user-message"></div>
-        <div id="response" class="message bot-message"></div>
-    </div>
-
-    <div class="input-container">
-        <input type="text" id="input"> 
-        <button onclick="sendData()">Send Query</button> 
-        <button onclick="test()">Test</button>
-    </div>
-    <script>
-        function test(){
-            var thinking = "Bot: Let me think...";
-            var value = document.getElementById('input').value;
-            document.getElementById('user-input').innerText = "User: " + value;
-
-            $.ajax({
-                url: '/testing',
-                type: 'POST',
-                data: { 'data': value },
-                function(response){
-                    document.getElementById('response').innerText = thinking;},
-                success: function(response){
-                    document.getElementById('response').innerText = "Bot: " + response;
-                },
-                error: function(error){
-                    console.log(error);
-                }
-            });
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EZDocuments Landing Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background-image: url('download.jpg'); /* Add your image path here */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
-    </script>
-    <script>
-        function sendData() { 
-            var value = document.getElementById('input').value;
-            document.getElementById('user-input').innerText = "User: " + value;
+        .btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
 
-            $.ajax({ 
-                url: '/process',
-                type: 'POST', 
-                data: { 'query': value },
-                success: function(response) { 
-                    document.getElementById('response').innerText = "Bot: " + response; 
-                }, 
-                error: function(error) { 
-                    console.log(error); 
-                } 
-            }); 
-        } 
-    </script> 
-</body> 
+<h1>Welcome to EZDocuments!</h1>
+<p>Your easy solution for managing documents and notes.</p>
+<a href="{{ url_for('notes') }}" class="btn">Go to Your Notes</a>
+<a href="{{ url_for('testing') }}" class="btn">Go to Another Page</a>
+
+</body>
 </html>

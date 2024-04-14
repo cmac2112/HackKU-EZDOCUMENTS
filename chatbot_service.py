@@ -35,7 +35,7 @@ class ChatbotService:
         engineered_prompt = ("You have been given text that comes from the user's school notes documents, "
                              "your job is to provide the user with an answer to their question and "
                              "provide context for where the answer came from in their notes. if you are unable to answer the question, "
-                             "respond with I am unable to answer this question try being more specific about a certain part of your notes..."
+                             "respond with your best guess or say that you are unable to answer the question."
                              "Make your response as detailed as possible to help the user understand the context of the answer. And format your response in a way that is easy to read. "
                              "also if possible, provide the user with a name to the document that contains the answer. "
                              "Here is the user query: ")

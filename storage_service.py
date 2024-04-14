@@ -43,3 +43,8 @@ class StorageService:
         index = VectorStoreIndex.from_documents(doc_chunks, storage_context=storage_context)
 
         print("storage done")
+
+    def store_doc_names(self, texts):
+        doc_names = []
+        for i in texts:
+            doc_names.append(i)

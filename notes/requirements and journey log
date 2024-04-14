@@ -30,3 +30,10 @@ Design to do:
 2. build chatbot service                                -done
 3. interaction handler                                  -done
 4. frontend flask and javascript                        -next
+
+
+5:45
+1. create landing page                  -done
+2. create notes page, and note text should be on left size      -next
+number 2 will require more google cloud api work
+3. create flashcard page
