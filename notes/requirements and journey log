@@ -34,6 +34,8 @@ Design to do:
 
 5:45
 1. create landing page                  -done
-2. create notes page, and note text should be on left size      -next
-number 2 will require more google cloud api work
-3. create flashcard page
+2. create notes page, and note text should be on left size      -done   
+2a. add the ability to edit text and reupload it to google drive
+3. create flashcard page/test page
+    - should have a button on main page to create new flash card or test
+    

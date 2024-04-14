@@ -44,3 +44,33 @@ class ChatbotService:
         response = query_engine.query(together_prompt)
  
         return str(response)
+    
+    def generate_test(self):
+        PINECONE_API_KEY = 'a2f5dd3d-59f2-4a0a-99ed-0b6aa589247b'
+        GOOGLE_API_KEY = 'AIzaSyAEWMjE0s5mlk3JjfYVo470EVLOf1OZioM'
+        
+        os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
+
+        llm = Gemini(os.environ["GOOGLE_API_KEY"])
+        embed_model = GeminiEmbedding(model_name="models/embedding-001")
+        
+        # Set the global service context
+        service_context = ServiceContext.from_defaults(llm=llm, embed_model=embed_model)
+        set_global_service_context(service_context)
+        
+        retriever = VectorIndexRetriever(index=self.index, similarity_top_k=10)
+        query_engine = RetrieverQueryEngine(retriever=retriever)
+
+        # Construct the query prompt
+        engineered_prompt = ("You have been given context that comes from the user's school notes,"
+                             "your job here is to generate some test questions relevant to the topic given by the user,"
+                             "and provide the user with the answers to the test questions at the very bottom,"
+                             "Your format for generating the questions is to first provide the question, then provide choices for the user to choose from in a, b, c, d format,"
+                             "and finally provide the correct answer to the question in the format of the correct choice in a, b, c, d format,"
+                             "and make sure to make the questions nice and neat such that the the question is on top, and the choices are below the question,"
+                             "Here is the user query: ")
+        
+        together_prompt = engineered_prompt + self.query
+        response = query_engine.query(together_prompt)
+ 
+        return str(response)

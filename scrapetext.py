@@ -46,12 +46,14 @@ def main():
 
         # List to store document names
         doc_names = []
+        doc_ids = []
         print("Google Docs:")
         for item in items:
             doc_id = item["id"]
             doc_name = item["name"]
             if "notes" in doc_name.lower():  
                 doc_names.append(doc_name)  
+                doc_ids.append(doc_id)
 
                 # Export the Google Doc as plain text
                 request = service.files().export_media(fileId=doc_id, mimeType="text/plain")
@@ -62,7 +64,6 @@ def main():
 
                 # Split the text into paragraphs
                 paragraphs = text_content.split("\n\n")  # Assuming paragraphs are separated by two newlines
-                print(paragraphs)
                 # Store each paragraph
                 storage_service = StorageService(paragraphs)
                 storage_service.get_embed_and_store()
@@ -70,7 +71,7 @@ def main():
     except HttpError as error:
         print(f"An error occurred: {error}")
 
-    return doc_names
+    return doc_names, doc_ids
 
 if __name__ == "__main__":
     print("Starting OAuth flow...")

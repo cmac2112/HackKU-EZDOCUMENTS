@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant Chat</title>
+    <style>
+        body {
+            border: 10px solid blue;
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .left,
+        .right {
+            width: 45%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .left {
+            margin-right: 20px;
+        }
+
+        .right {
+            margin-left: 20px;
+        }
+
+        #query {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #queryBtn {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .chat-container {
+            height: 350px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .bubble {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+
+        .user-bubble {
+            align-self: flex-end;
+            background-color: #007bff;
+            color: white;
+        }
+
+        #refreshBtn {
+            margin-bottom: 20px;
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="left">
+        <h3>Generated Test</h3>
+        <div class="chat-container">
+            <div id="chatLeft">
+                <!-- AI assistant responses will be displayed here -->
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <h3>Generate A Test Here!</h3>
+        <input type="text" id="input" placeholder="Enter your query...">
+        <button id="queryBtn" onclick="sendData()">Query</button>
+        <div class="chat-container">
+            <div id="chatRight">
+                <!-- User queries and AI responses will be displayed here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function sendData() {
+        const value = document.getElementById('input').value;
+        const chatDivRight = document.getElementById('chatRight');
+        const bubbleRight = document.createElement('div');
+        const userBubble = document.createElement('div');
+
+        userBubble.classList.add('bubble', 'user-bubble');
+        userBubble.textContent = "User: " + value;
+        bubbleRight.appendChild(userBubble);
+        chatDivRight.appendChild(bubbleRight);
+
+        $.ajax({ 
+            url: '/generate_test',
+            type: 'POST',  // Changed from GET to POST
+            data: { 'query': value },
+            success: function(response) {
+                const botBubble = document.createElement('div');
+                botBubble.classList.add('bubble');
+                botBubble.textContent = "Bot: " + response;
+                bubbleRight.appendChild(botBubble);
+                
+                const chatDivLeft = document.getElementById('chatLeft');
+                const botBubbleLeft = document.createElement('div');
+                botBubbleLeft.classList.add('bubble');
+                botBubbleLeft.textContent = "Bot: " + response;
+                chatDivLeft.appendChild(botBubbleLeft);
+            }, 
+            error: function(error) { 
+                console.log(error); 
+            } 
+        }); 
+    }
+</script>
+
+</body>
+</html>

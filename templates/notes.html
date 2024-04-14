@@ -5,9 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Document Access</title>
     <style>
+        body {
+            border: 10px solid blue;
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
         .container {
             display: flex;
             justify-content: space-between;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
         }
 
         .left,
@@ -15,21 +37,23 @@
         .right {
             width: 30%;
             padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
         }
 
         .left {
-            border-right: 1px solid #ccc;
+            border-right: none;
         }
 
         .middle {
-            border: 1px solid #ccc;
+            margin: 0 20px;
             height: 400px;
             overflow-y: auto;
             padding: 10px;
         }
 
         .right {
-            border-left: 1px solid #ccc;
+            border-left: none;
         }
 
         #query {
@@ -65,20 +89,31 @@
 
         #refreshBtn {
             margin-bottom: 20px;
-            padding: 10px;
+            padding: 12px 20px;
             cursor: pointer;
         }
 
         .doc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
         }
 
         .doc-item button {
+            padding: 8px 15px;
+            margin-right: 10px;
             cursor: pointer;
         }
 
         #docTextContent {
             white-space: pre-wrap;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 10px;
+            text-align: center;
         }
     </style>
 </head>
@@ -87,6 +122,7 @@
 <div class="container">
     <div class="left">
         <button id="refreshBtn" onclick="refreshDocList()">Get Your Notes!</button>
+        <div class="loading" id="loading">Loading...</div>
         <h3>Items AI has access to</h3>
         <div id="docList">
             <!-- Document names will be displayed here -->
@@ -94,9 +130,10 @@
     </div>
     <div class="middle">
         <h3>Document Text</h3>
-        <div id="docTextContent">
+        <div id="docTextContent" contenteditable="true">
             <!-- Document text will be displayed here -->
         </div>
+        <button id="saveBtn" onclick="saveChanges()">Save Changes</button>
     </div>
     <div class="right">
         <h3>Query AI</h3>
@@ -154,11 +191,15 @@
     }
 
     function refreshDocList() {
+        const loadingDiv = document.getElementById('loading');
+        loadingDiv.style.display = 'block';
+
         fetch('/refresh_doc_list', {
             method: 'GET',
         })
         .then(response => response.json())
         .then(data => {
+            loadingDiv.style.display = 'none';
             const docList = document.getElementById('docList');
             docList.innerHTML = '';
             data.documents.forEach(doc => {
@@ -168,11 +209,44 @@
                 button.textContent = doc;
                 button.onclick = () => getDocText(doc);
                 docItem.appendChild(button);
+
+                // Add Edit Button
+                const editButton = document.createElement('button');
+                editButton.textContent = "Edit";
+                editButton.onclick = () => enableEditing(doc);
+                docItem.appendChild(editButton);
+
                 docList.appendChild(docItem);
             });
+        });
+    }
+
+    function enableEditing(docName) {
+        document.getElementById('saveBtn').setAttribute('data-doc-name', docName);
+        getDocText(docName);
+    }
+
+    function saveChanges() {
+        const docName = document.getElementById('saveBtn').getAttribute('data-doc-name');
+        const newText = document.getElementById('docTextContent').textContent;
+
+        fetch('/save_doc_text', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 'doc_name': docName, 'text': newText }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Changes saved successfully!');
+            } else {
+                alert('Failed to save changes.');
+            }
         });
     }
 </script>
 
 </body>
-</html>
+
