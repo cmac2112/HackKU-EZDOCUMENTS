@@ -1,1 +1,1 @@
-token.json causes some issues, fix that tomorrow then find a way to scrape text into a database
+when token.json is deleted, it requires the user to login again, delete before demo

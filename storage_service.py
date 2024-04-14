@@ -11,6 +11,7 @@ from llama_index.core import SummaryIndex, Document
 class StorageService:
     def __init__(self, texts):
         self.texts = texts
+        #texts is a list of strings that are the paragraphs of the documents
 
     def get_embed_and_store(self):
         GOOGLE_API_KEY = 'AIzaSyAEWMjE0s5mlk3JjfYVo470EVLOf1OZioM'
@@ -25,6 +26,7 @@ class StorageService:
 
         ind = SummaryIndex([])
         doc_chunks = []
+        #begin adding documents to the index
         for i, text in enumerate(self.texts):
             doc = Document(text=text, id_=f'doc_id_{i}')
             doc_chunks.append(doc)
@@ -33,7 +35,7 @@ class StorageService:
             ind.insert(doc_chunk)
         
         pinecone_index = pinecone_client.Index("hackku")
-
+        #embed the documents and store them in the index
         gemini_embed_model = GeminiEmbedding(model_name="models/embedding-001")
         service_context = ServiceContext.from_defaults(llm=llm, embed_model=gemini_embed_model)
         set_global_service_context(service_context)
@@ -44,6 +46,8 @@ class StorageService:
 
         print("storage done")
 
+    #extra function to store the document names to be used by flask to display document names
+    #on the notes page
     def store_doc_names(self, texts):
         doc_names = []
         for i in texts:
