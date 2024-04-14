@@ -109,6 +109,7 @@ def get_doc_text():
     doc_text = text.get_text()
     return jsonify({'text': doc_text})
 
+#function to save document text and send it to google docs
 @app.route('/save_doc_text', methods=['POST'])
 def save_doc_text():
     data = json.loads(request.data)

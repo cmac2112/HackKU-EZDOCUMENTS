@@ -8,7 +8,9 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
 
-
+# Class to get the text from a Google Doc
+#this one is used for quick access of the text on the notes.html page
+#very similar to screptext.py but it does not format the text to be stored
 class GetDocText:
     def __init__(self, doc_name):
         self.doc_name = doc_name

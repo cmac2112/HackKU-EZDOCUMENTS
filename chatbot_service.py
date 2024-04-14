@@ -12,8 +12,8 @@ from llama_index.core.retrievers import VectorIndexRetriever
 
 class ChatbotService:
     def __init__(self, query, index):
-        self.query = query
-        self.index = index
+        self.query = query  #query comes from the user
+        self.index = index #index comes from interaction handler getting it from pinecone
 
     def input_query(self):
         PINECONE_API_KEY = 'a2f5dd3d-59f2-4a0a-99ed-0b6aa589247b'
@@ -44,7 +44,7 @@ class ChatbotService:
         response = query_engine.query(together_prompt)
  
         return str(response)
-    
+    #different method than above, this one is for generating a test based on the user query
     def generate_test(self):
         PINECONE_API_KEY = 'a2f5dd3d-59f2-4a0a-99ed-0b6aa589247b'
         GOOGLE_API_KEY = 'AIzaSyAEWMjE0s5mlk3JjfYVo470EVLOf1OZioM'
@@ -61,7 +61,7 @@ class ChatbotService:
         retriever = VectorIndexRetriever(index=self.index, similarity_top_k=10)
         query_engine = RetrieverQueryEngine(retriever=retriever)
 
-        # Construct the query prompt
+        # Construct the query prompt for generating test questions
         engineered_prompt = ("You have been given context that comes from the user's school notes,"
                              "your job here is to generate some test questions relevant to the topic given by the user,"
                              "and provide the user with the answers to the test questions at the very bottom,"

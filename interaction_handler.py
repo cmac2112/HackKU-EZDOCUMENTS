@@ -12,7 +12,7 @@ from llama_index.core import SummaryIndex, Document
 from llama_index.core import Settings
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.retrievers import VectorIndexRetriever
-
+#looking to get the right place to store vectors
 class InteractionHandler:
     def __init__(self, index):
         self.index = index
