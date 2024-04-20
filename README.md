@@ -2,7 +2,8 @@
 Hopefully a good tool for all students using AI. This program will connect user's google docs and google gemini will allow users to ask questions on what is on the notes, write flashcards, test themselves etc.
 
 # Demo
-https://youtu.be/6iCwlqhiG8Y
+https://github.com/cmac2112/HackKU-EZDOCUMENTS/assets/142555154/12ff2cbb-3bd0-4ab3-a0bf-c69c5f45d60c
+
 
 
 # JSON CREDENTIALS READ ME DO NOT SKIP!
